@@ -1,6 +1,7 @@
 from AppKit import PDFDocument, NSURL, NSEdgeInsets
 from AppKit import PDFView as AppKitPDFView
 from vanilla.vanillaBase import VanillaBaseObject
+import os
 
 
 class PDFView(VanillaBaseObject):
@@ -31,11 +32,18 @@ class PDFView(VanillaBaseObject):
     def __init__(self, posSize):
         self._setupView(self.nsPDFViewClass, posSize)
 
-    def setDocument(self, doc):
-        self._nsObject.setDocument_(doc)
+    def setDocument(self, document=None):
+        if document is not None:
+            self._nsObject.setDocument_(document)
+        else:
+            raise ValueError("No PDF Document defined")
 
-    def setDocumentWithPath(self, path):
-        self.documentURL = NSURL.alloc().initFileURLWithPath_(path)
+    def setDocumentWithPath(self, path=None):
+        if path is not None:
+            path = os.path.abspath(os.path.expanduser(path))
+            self.documentURL = NSURL.alloc().initFileURLWithPath_(path)
+        else:
+            raise ValueError("No PDF source defined")
         self.document = PDFDocument.alloc().initWithURL_(self.documentURL)
         self.setDocument(self.document)
 
