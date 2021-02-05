@@ -1,5 +1,6 @@
-from AppKit import PDFDocument, NSURL, NSEdgeInsets
-from AppKit import PDFView as AppKitPDFView
+from AppKit import NSURL, NSEdgeInsets
+from Quartz import PDFDocument
+from Quartz import PDFView as AppKitPDFView
 from vanilla.vanillaBase import VanillaBaseObject
 import os
 
